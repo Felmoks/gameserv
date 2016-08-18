@@ -1,0 +1,6 @@
+[package]
+name = "gameserv"
+version = "0.1.0"
+authors = ["felmoks <zemtsov.e.e@gmail.com>"]
+
+[dependencies]
