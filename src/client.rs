@@ -1,5 +1,7 @@
 extern crate mio;
 
+use std::net::TcpStream;
+
 fn main() {
-    println!("Hello, from client!");
+    let mut _stream = TcpStream::connect("0.0.0.0:6567").unwrap();
 }
