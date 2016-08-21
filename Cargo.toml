@@ -3,4 +3,12 @@ name = "gameserv"
 version = "0.1.0"
 authors = ["felmoks <zemtsov.e.e@gmail.com>"]
 
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
+
 [dependencies]
