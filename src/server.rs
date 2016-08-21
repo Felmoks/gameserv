@@ -1,3 +1,5 @@
+extern crate mio;
+
 fn main() {
     println!("Hello, from server!");
 }
