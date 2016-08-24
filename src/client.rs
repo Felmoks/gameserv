@@ -1,3 +1,9 @@
+use std::io::Write;
+
 fn main() {
-    println!("Hello, from client!");
+    let mut stream = std::net::TcpStream::connect("127.0.0.1:8888").unwrap();
+
+    let str = b"-";
+
+    let _ = stream.write(str);
 }

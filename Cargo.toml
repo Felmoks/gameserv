@@ -12,4 +12,5 @@ name = "client"
 path = "src/client.rs"
 
 [dependencies]
-mio = "0.5"
+mio  = "0.5"
+slab = "0.1.3"
