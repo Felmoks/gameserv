@@ -5,8 +5,8 @@ const SERVER: mio::Token = mio::Token(0);
 
 use std::io::Read;
 
+#[derive(Debug)]
 struct Connection {
-    token:  mio::Token,
     socket: mio::tcp::TcpStream,
 }
 
@@ -20,7 +20,7 @@ impl mio::Handler for MyHandler {
     type Timeout = ();
     type Message = ();
 
-    fn ready(&mut self, event_loop: &mut mio::EventLoop<MyHandler>, token: mio::Token, events : mio::EventSet) {
+    fn ready(&mut self, event_loop: &mut mio::EventLoop<MyHandler>, token: mio::Token, _events : mio::EventSet) {
         println!("The server is ready to accept connection");
         match token {
             SERVER => {
@@ -28,9 +28,8 @@ impl mio::Handler for MyHandler {
                     Ok(Some((socket, _addr))) => {
                         println!("Accepted new socket");
 
-                        let token = self.clients
-                            .insert_with(|token| Connection { token: token, socket: socket })
-                            .unwrap();
+                        let token = self.clients.insert(Connection { socket: socket }).unwrap();
+                        println!("New token: {:?}", token);
 
                         event_loop.register(
                             &self.clients[token].socket,
@@ -87,8 +86,8 @@ fn main() {
     event_loop.run(
         &mut MyHandler {
             server:  server,
-            clients: mio::util::Slab::new(1024),
+            clients: mio::util::Slab::new_starting_at(mio::Token(1), 1024),
             state:   std::cell::RefCell::new(0) 
         }
-    );
+    ).unwrap();
 }
